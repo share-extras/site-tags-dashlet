@@ -9,7 +9,7 @@ the current site as a tag cloud.
 Installation
 ------------
 
-The theme has been developed to install on top of an existing Alfresco
+The dashlet has been developed to install on top of an existing Alfresco
 3.3 installation.
 
 An Ant build script is provided to build a JAR file containing the 
