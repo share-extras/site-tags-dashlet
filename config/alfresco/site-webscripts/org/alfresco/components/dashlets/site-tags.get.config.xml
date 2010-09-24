@@ -1,3 +1,6 @@
 <site-tags>
-   <maxitems>50</maxitems>
+   <maxItems>50</maxItems>
+   <minFontSize>1.0</minFontSize>
+   <maxFontSize>3.0</maxFontSize>
+   <fontSizeUnits>em</fontSizeUnits>
 </site-tags>

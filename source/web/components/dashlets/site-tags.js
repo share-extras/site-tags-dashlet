@@ -91,7 +91,34 @@
           * @type string
           * @default "all"
           */
-         activeFilter: "all"
+         activeFilter: "all",
+
+         /**
+          * Minimum tag font size.
+          * 
+          * @property minFontSize
+          * @type number
+          * @default 1.0
+          */
+         minFontSize: 1.0,
+
+         /**
+          * Maximum tag font size.
+          * 
+          * @property maxFontSize
+          * @type number
+          * @default 3.0
+          */
+         maxFontSize: 3.0,
+
+         /**
+          * Font size units
+          * 
+          * @property fontSizeUnits
+          * @type string
+          * @default "em"
+          */
+         fontSizeUnits: "em"
       },
 
       /**
@@ -236,18 +263,15 @@
        */
       onTagsSuccess: function SiteTags_onTagsSuccess(p_response)
       {
-         // Retrieve the tags list from the JSON response and trim accordingly
-         var tags = p_response.json.tags.slice(0, this.options.maxItems),
-            numTags = tags.length,
-            totalTags = 0,
-            html = "",
-            i, ii;
-
-         // Work out total number of tags for scaling
-         for (i = 0, ii = tags.length; i < ii; i++)
-         {
-            totalTags += tags[i].count;
-         }
+          // Retrieve the tags list from the JSON response and trim accordingly
+          var tags = p_response.json.tags.slice(0, this.options.maxItems),
+             numTags = tags.length,
+             html = "",
+             i, ii,
+             minFontSize = this.options.minFontSize,
+             maxFontSize = this.options.maxFontSize,
+             fontSizeUnits = this.options.fontSizeUnits,
+             minTagCount, maxTagCount;
 
          // Tags to show?
          if (tags.length === 0)
@@ -258,13 +282,36 @@
          {
             // Define inline scaling functions
             var tag,
+	            fnMaxTagCount = function maxTagCount()
+	            {
+	         	   var maxCount = 0, count;
+	         	   for (i = 0, ii = tags.length; i < ii; i++)
+	                {
+	         		   if ((count = tags[i].count) > maxCount)
+	         			   maxCount = count;
+	                }
+	         	   return maxCount;
+	            },
+	            fnMinTagCount = function minTagCount()
+	            {
+	         	   var minCount = 1000000, count;
+	         	   for (i = 0, ii = tags.length; i < ii; i++)
+	                {
+	         		   if ((count = tags[i].count) < minCount)
+	         			   minCount = count;
+	                }
+	         	   return minCount;
+	            },
                fnTagWeighting = function tagWeighting(thisTag)
                {
-                  return thisTag.count / (totalTags / numTags);
+                  //return Math.sqrt(thisTag.count / (totalTags / numTags));
+	              // should return a number between 0.0 (for smallest) and 1.0 (for largest)
+	              return (tag.count - minTagCount) / (maxTagCount - minTagCount);
                },
                fnTagFontSize = function tagFontSize(thisTag)
                {
-                  return (0.5 + fnTagWeighting(thisTag)).toFixed(2);
+                  return (minFontSize + 
+                		  (maxFontSize - minFontSize) * fnTagWeighting(thisTag)).toFixed(2);
                },
                fnSortByTagAlphabetical = function sortByTagAlphabetical(tag1, tag2)
                {
@@ -276,7 +323,10 @@
                   
                   return 0;
                };
-               
+            
+            // Initialise min and max tag counts
+            minTagCount = fnMinTagCount(), maxTagCount = fnMaxTagCount();
+            
             // Sort tags alphabetically - standard for tag clouds
             tags.sort(fnSortByTagAlphabetical);
 
@@ -284,7 +334,7 @@
             for (i = 0, ii = tags.length; i < ii; i++)
             {
                tag = tags[i];
-               html += '<div class="tag"><a href="' + this.getUriTemplate(tag) + '" class="theme-color-1" style="font-size: ' + fnTagFontSize(tag) + 'em">' + $html(tag.name) + '</a></div> ';
+               html += '<div class="tag"><a href="' + this.getUriTemplate(tag) + '" class="theme-color-1" style="font-size: ' + fnTagFontSize(tag) + fontSizeUnits + '">' + $html(tag.name) + '</a></div> ';
             }
          }
          this.tagsContainer.innerHTML = html;

@@ -3,7 +3,10 @@
    {
       siteId: "${page.url.templateArgs.site!""}",
       maxItems: ${(maxItems?string!"50")},
-      activeFilter: "${preferences.siteTagsFilter!"all"}"
+      activeFilter: "${preferences.siteTagsFilter!"all"}",
+      minFontSize: ${(minFontSize?string!"1.0")},
+      maxFontSize: ${(maxFontSize?string!"3.0")},
+      fontSizeUnits: "${(fontSizeUnits?string!"em")}"
    }).setMessages(
       ${messages}
    );

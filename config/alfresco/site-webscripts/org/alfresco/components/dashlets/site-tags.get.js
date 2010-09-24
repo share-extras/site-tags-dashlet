@@ -3,7 +3,10 @@ const PREFERENCES_ROOT = "org.alfresco.share.dashlet";
 function main()
 {
    var s = new XML(config.script);
-   model.maxItems = parseInt(s.maxitems, 10);
+   model.maxItems = parseInt(s.maxItems, 10);
+   model.minFontSize = parseFloat(s.minFontSize, 1.0);
+   model.maxFontSize = parseFloat(s.maxFontSize, 3.0);
+   model.fontSizeUnits = s.fontSizeUnits.toString();
 
    var result, preferences = {};
    
