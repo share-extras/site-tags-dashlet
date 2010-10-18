@@ -304,7 +304,6 @@
 	            },
                fnTagWeighting = function tagWeighting(thisTag)
                {
-                  //return Math.sqrt(thisTag.count / (totalTags / numTags));
 	              // should return a number between 0.0 (for smallest) and 1.0 (for largest)
 	              return (tag.count - minTagCount) / (maxTagCount - minTagCount);
                },
