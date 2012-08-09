@@ -27,7 +27,7 @@
          <option value="discussions">${msg("filter.discussions")}</option>                
       </select>
    </div>
-   <div class="body" <#if args.height??>style="height: ${args.height}px;"</#if>>
+   <div class="body scrollableList" <#if args.height??>style="height: ${args.height}px;"</#if>>
       <div id="${args.htmlid}-tags"></div>
       <div class="clear"></div>
    </div>

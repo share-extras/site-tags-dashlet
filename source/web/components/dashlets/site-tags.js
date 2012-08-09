@@ -329,12 +329,15 @@
             // Sort tags alphabetically - standard for tag clouds
             tags.sort(fnSortByTagAlphabetical);
 
+            html = '<ul>';
             // Generate HTML mark-up for each tag
             for (i = 0, ii = tags.length; i < ii; i++)
             {
                tag = tags[i];
-               html += '<div class="tag"><a href="' + this.getUriTemplate(tag) + '" class="theme-color-1" style="font-size: ' + fnTagFontSize(tag) + fontSizeUnits + '">' + $html(tag.name) + '</a></div> ';
+               html += '<li class="tag"><a href="' + this.getUriTemplate(tag) + '" class="theme-color-1" style="font-size: ' + fnTagFontSize(tag) + fontSizeUnits + '">' + $html(tag.name) + '</a></li>\n';
             }
+            html += '</ul>\n';
+            html += '<div class="clear"></div>';
          }
          this.tagsContainer.innerHTML = html;
          

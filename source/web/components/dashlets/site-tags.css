@@ -1,7 +1,13 @@
+.site-tags ul
+{
+    margin: 0;
+    padding: 0;
+}
+
 .site-tags .tag
 {
-	display: inline-block;
-	padding: 0.2em;
+    display: inline;
+    padding: 0.2em;
 }
 
 .site-tags .refresh
