@@ -1,3 +1,9 @@
+.dashlet.site-tags .body > div
+{
+   padding-left: 8px;
+   padding-right: 8px;
+}
+
 .site-tags ul
 {
     margin: 0;
