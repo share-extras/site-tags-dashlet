@@ -390,7 +390,7 @@
                break;
             
             default:
-               uri += '/search?tag=' + encodeURIComponent(tag.name) + '&amp;a=false';
+               uri += '/search?tag=' + encodeURIComponent('"' + tag.name + '"') + '&amp;a=false';
          }
          return uri;
       },
